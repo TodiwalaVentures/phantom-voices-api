@@ -2,11 +2,10 @@
   "mcpServers": {
     "phantom-voices": {
       "command": "npx",
-      "args": [
-        "-y",
-        "phantom-voices-mcp"
-      ],
-      "env": {}
+      "args": ["phantom-voices-mcp"],
+      "env": {
+        "PHANTOM_VOICES_API_URL": "https://auto-business-agent.replit.app"
+      }
     }
   }
 }
