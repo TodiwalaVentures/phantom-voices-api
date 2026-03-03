@@ -1,0 +1,26 @@
+{
+  "name": "phantom-voices-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for PHANTOM VOICES — 10 free professional AI voice clones. Use with Claude Desktop to discover, search, and recommend voices for 29 platforms.",
+  "main": "index.js",
+  "keywords": [
+    "mcp",
+    "claude",
+    "voice",
+    "tts",
+    "text-to-speech",
+    "elevenlabs",
+    "voice-cloning",
+    "ai",
+    "voice-agent",
+    "vapi",
+    "retell",
+    "bland-ai"
+  ],
+  "homepage": "https://auto-business-agent.replit.app/portfolio",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TodiwalaVentures/phantom-voices-api"
+  },
+  "license": "MIT"
+}
