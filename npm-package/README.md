@@ -59,15 +59,16 @@ const audioBuffer = await response.arrayBuffer();
 
 ## Supported Platforms
 
-These voices work with **18 platforms** across voice agents, AI frameworks, and no-code tools:
+These voices work with **29 platforms** across voice agents, AI frameworks, video AI, and no-code tools:
 
 | Category | Platforms |
 |----------|-----------|
-| Voice Agent Platforms | Vapi, Retell AI, Bland AI, Synthflow, Voiceflow |
+| Voice Agent Platforms | Vapi, Retell AI, Bland AI, Synthflow, Voiceflow, Play.ai |
 | AI Frameworks | LangChain, CrewAI, AutoGen, Vercel AI SDK |
 | No-Code / Low-Code | n8n, Make.com, Zapier, Botpress, Flowise, Dify.ai |
+| Video AI | HeyGen, Synthesia, D-ID, Pictory, InVideo, Colossyan, Fliki, Runway, Descript, Kapwing, Lumen5 |
 | Developer Tools | ElevenLabs API Direct, OpenAI Custom GPT, Claude MCP |
-| Telephony & Conversational | Twilio, Play.ai |
+| Telephony | Twilio |
 
 ---
 
@@ -131,7 +132,7 @@ Use the `voiceId` from any voice object directly in your platform's ElevenLabs i
 - [MCP Server for Claude](https://www.npmjs.com/package/phantom-voices-mcp) — Add to Claude Desktop
 - [Custom GPT](https://auto-business-agent.replit.app) — Use with ChatGPT
 
-See the full [Integration Guide](https://auto-business-agent.replit.app/distribution/API_DIRECTORY_GUIDE.md) for detailed setup instructions for all 18 platforms.
+See the full [Integration Guide](https://auto-business-agent.replit.app/distribution/API_DIRECTORY_GUIDE.md) for detailed setup instructions for all 29 platforms.
 
 ---
 
