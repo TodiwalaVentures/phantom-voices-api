@@ -1,6 +1,6 @@
 # PHANTOM VOICES — Claude MCP Server
 
-Connect 10 free professional AI voice clones directly to Claude Desktop. Ask Claude to find, recommend, and configure voices for any use case across 18 platforms.
+Connect 10 free professional AI voice clones directly to Claude Desktop. Ask Claude to find, recommend, and configure voices for any use case across 29 platforms.
 
 ## Quick Setup (2 minutes)
 
@@ -68,7 +68,7 @@ Once connected, Claude can:
 
 | Tool | Description |
 |------|-------------|
-| `recommend_voice` | AI-powered voice recommendation with platform configs for 18 platforms |
+| `recommend_voice` | AI-powered voice recommendation with platform configs for 29 platforms |
 | `list_voices` | Browse all 10 professional voice clones |
 | `get_voice` | Get detailed info for a specific voice (V1-V10) |
 | `search_voices` | Search by keyword or filter by language |
@@ -84,7 +84,12 @@ Once connected, Claude can:
 
 Every recommendation includes ready-to-paste configs for:
 
-Vapi, Retell AI, Bland AI, Synthflow, Voiceflow, Twilio, Botpress, Dify.ai, Flowise, n8n, Make, Zapier, LangChain, CrewAI, AutoGen, Vercel AI SDK, Play.ai, and direct ElevenLabs API.
+**Voice Agents:** Vapi, Retell AI, Bland AI, Synthflow, Voiceflow, Play.ai
+**AI Frameworks:** LangChain, CrewAI, AutoGen, Vercel AI SDK
+**No-Code:** Botpress, Dify.ai, Flowise, n8n, Make, Zapier
+**Video AI:** HeyGen, Synthesia, D-ID, Pictory, InVideo, Colossyan, Fliki, Runway, Descript, Kapwing, Lumen5
+**Telephony:** Twilio
+**Direct:** ElevenLabs API
 
 ## All Voices Are Free
 
