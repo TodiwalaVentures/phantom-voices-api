@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "phantom-voices": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "phantom-voices-mcp"
+      ],
+      "env": {}
+    }
+  }
+}
