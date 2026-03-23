@@ -1,0 +1,58 @@
+{
+  "name": "phantom-voices",
+  "version": "1.0.0",
+  "description": "10 Professional AI Voice Clones — Zero Fee, Instant API Integration via ElevenLabs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "keywords": [
+    "elevenlabs",
+    "text-to-speech",
+    "tts",
+    "voice-clones",
+    "ai-voice",
+    "voice-api",
+    "multilingual",
+    "gaming-voice",
+    "audiobook",
+    "e-learning",
+    "narration",
+    "professional-voice",
+    "commercial-voice",
+    "mcp",
+    "claude",
+    "vapi",
+    "retell",
+    "bland-ai",
+    "voice-agent",
+    "customer-support",
+    "ivr",
+    "phone-agent",
+    "video-narration",
+    "podcast",
+    "british-voice",
+    "sales",
+    "gaming",
+    "synthflow",
+    "voiceflow",
+    "chatgpt",
+    "openai"
+  ],
+  "author": "PHANTOM VOICES",
+  "license": "MIT",
+  "homepage": "https://auto-business-agent.replit.app/portfolio",
+  "bugs": {
+    "url": "https://github.com/TodiwalaVentures/phantom-voices-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TodiwalaVentures/phantom-voices-api.git"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
