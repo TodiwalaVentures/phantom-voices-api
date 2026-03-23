@@ -1,0 +1,352 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PHANTOM VOICES — Voice Catalog API",
+    "description": "Public API for discovering and integrating 10 professional AI voice clones. Zero cost. Commercial rights cleared. Supports 29 platforms including Vapi, Retell AI, Bland AI, HeyGen, Synthesia, and more.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://auto-business-agent.replit.app",
+      "description": "PHANTOM VOICES API"
+    }
+  ],
+  "paths": {
+    "/api/public/voices": {
+      "get": {
+        "summary": "List all 10 voice clones with metadata, keywords, languages, use cases, and integration snippets",
+        "operationId": "listVoices",
+        "tags": ["voices"],
+        "responses": {
+          "200": {
+            "description": "Array of all 10 voice assets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Voice"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/voices/{id}": {
+      "get": {
+        "summary": "Get a single voice clone by ID (V1 through V10)",
+        "operationId": "getVoice",
+        "tags": ["voices"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "V1"
+            },
+            "description": "Voice ID (V1-V10)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Voice asset details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Voice"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Voice not found"
+          }
+        }
+      }
+    },
+    "/api/public/search": {
+      "get": {
+        "summary": "Search voices by keyword and language",
+        "operationId": "searchVoices",
+        "tags": ["voices"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query matching name, description, keywords. Examples: 'corporate', 'gaming horror', 'audiobook'"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by language (e.g. japanese, spanish, french, korean, german, hindi, arabic)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching voices sorted by relevance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Voice"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/recommend": {
+      "get": {
+        "summary": "Get AI-powered voice recommendations. Describe what you need and get the best matching voice with platform-ready config.",
+        "operationId": "recommendVoice",
+        "tags": ["recommendation"],
+        "description": "Intelligent voice selector for AI agents, chatbots, and automated systems. Describe your use case in natural language and receive the best matching professional voice clone with ready-to-use configuration for your target platform.",
+        "parameters": [
+          {
+            "name": "use_case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "customer support phone agent"
+            },
+            "description": "What the voice will be used for. Examples: 'customer support', 'sales outbound', 'medical appointment booking', 'audiobook narration', 'gaming NPC', 'podcast host'"
+          },
+          {
+            "name": "platform",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "vapi",
+                "retell",
+                "bland",
+                "synthflow",
+                "voiceflow",
+                "langchain",
+                "elevenlabs",
+                "twilio",
+                "playai",
+                "botpress",
+                "dify",
+                "flowise",
+                "n8n",
+                "make",
+                "zapier",
+                "crewai",
+                "autogen",
+                "vercel"
+              ],
+              "example": "vapi"
+            },
+            "description": "Target platform for config snippet. Returns platform-specific configuration ready to paste. If omitted, returns configs for all supported platforms."
+          },
+          {
+            "name": "tone",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "professional"
+            },
+            "description": "Desired voice tone. Examples: 'professional', 'friendly', 'authoritative', 'energetic', 'calm', 'immersive'"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "english"
+            },
+            "description": "Target language for voice output"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "default": 3
+            },
+            "description": "Number of voice recommendations to return (1-10)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Voice recommendations with platform-specific configs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recommendation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No filter parameters provided"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Voice": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "V1"
+          },
+          "name": {
+            "type": "string"
+          },
+          "archetype": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "useCases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "elevenlabsUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "voiceId": {
+            "type": "string"
+          },
+          "integrationSnippet": {
+            "type": "object",
+            "properties": {
+              "python": {
+                "type": "string"
+              },
+              "javascript": {
+                "type": "string"
+              },
+              "curl": {
+                "type": "string"
+              }
+            }
+          },
+          "commercialRightsCleared": {
+            "type": "boolean"
+          },
+          "handshakeFee": {
+            "type": "string",
+            "example": "\u00a30.00"
+          },
+          "signupUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "ElevenLabs signup link for new users"
+          }
+        }
+      },
+      "Recommendation": {
+        "type": "object",
+        "properties": {
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "voiceId": {
+                  "type": "string",
+                  "description": "ElevenLabs voice ID for direct integration"
+                },
+                "id": {
+                  "type": "string",
+                  "description": "PHANTOM VOICES internal ID (V1-V10)"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "archetype": {
+                  "type": "string"
+                },
+                "confidence": {
+                  "type": "string",
+                  "enum": ["strong", "partial", "general-purpose"],
+                  "description": "How well this voice matches the query"
+                },
+                "useCases": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "languages": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "elevenlabsUrl": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "signupUrl": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "platformConfig": {
+                  "type": "object",
+                  "description": "Ready-to-use configuration for the specified platform"
+                },
+                "platformConfigs": {
+                  "type": "object",
+                  "description": "Configurations for all supported platforms (when no specific platform requested)"
+                }
+              }
+            }
+          },
+          "matchType": {
+            "type": "string",
+            "enum": ["matched", "default"]
+          },
+          "query": {
+            "type": "object",
+            "description": "Echo of query parameters"
+          }
+        }
+      }
+    }
+  }
+}
