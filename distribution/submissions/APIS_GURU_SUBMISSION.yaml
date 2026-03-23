@@ -1,0 +1,60 @@
+# APIs.guru OpenAPI Directory Submission
+# Repository: https://github.com/APIs-guru/openapi-directory
+#
+# HOW TO SUBMIT:
+# 1. Fork https://github.com/APIs-guru/openapi-directory
+# 2. Create file: APIs/phantomvoices.com/1.0.0/openapi.yaml
+# 3. Paste the content below
+# 4. Submit PR with title: "Add PHANTOM VOICES — Free AI Voice Clone API"
+#
+# Alternatively, submit via their web form:
+# https://apis.guru/browse-apis/
+# Click "Add API" and provide your OpenAPI spec URL:
+# https://auto-business-agent.replit.app/api/public/openapi.json
+
+# --- Metadata for APIs.guru ---
+x-origin:
+  - format: openapi
+    url: "https://auto-business-agent.replit.app/api/public/openapi.json"
+    version: "3.0.3"
+
+x-logo:
+  url: "https://auto-business-agent.replit.app/favicon.ico"
+  backgroundColor: "#000000"
+
+x-preferred: true
+x-providerName: "phantomvoices"
+x-serviceName: "voice-catalog"
+x-category: "ai"
+x-tags:
+  - voice
+  - text-to-speech
+  - ai
+  - voice-cloning
+  - elevenlabs
+  - multilingual
+  - free
+  - voice-agent
+  - mcp
+  - langchain
+  - vapi
+  - retell
+
+# --- PR Description ---
+# Title: Add PHANTOM VOICES — Free AI Voice Clone API
+# Description:
+#   PHANTOM VOICES provides 10 free professional AI voice clones via a public REST API.
+#   No authentication required. Zero cost. Commercial rights cleared.
+#
+#   Features:
+#   - Voice catalog browsing, search, and AI-powered recommendation
+#   - Platform-ready configs for 29 platforms (Vapi, Retell AI, Bland AI, Synthflow,
+#     Voiceflow, Twilio, Play.ai, Botpress, LangChain, CrewAI, AutoGen, Vercel AI SDK,
+#     Dify.ai, Flowise, n8n, Make, Zapier, HeyGen, Synthesia, D-ID, Pictory, InVideo,
+#     Colossyan, Fliki, Runway, Descript, Kapwing, Lumen5, and direct ElevenLabs API)
+#   - Audio previews (MP3) in 9 languages
+#   - Voice comparison against stock ElevenLabs voices
+#   - AI agent discovery: ai-plugin.json, agent.json, llms.txt, MCP server
+#   - Natural language recommendation with synonym expansion
+#   - OpenAPI 3.0 spec: https://auto-business-agent.replit.app/api/public/openapi.json
+#   - Multilingual output (English, Japanese, Korean, Spanish, French, German, Hindi, Arabic, Portuguese)
