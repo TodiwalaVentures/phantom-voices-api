@@ -1,0 +1,42 @@
+{
+  "name": "phantom-voices-mcp",
+  "version": "1.0.1",
+  "description": "Claude MCP Server for PHANTOM VOICES — 10 free professional AI voice clones. Lets Claude recommend, search, and browse voices with platform-ready configs for 29 platforms.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "phantom-voices-mcp": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "claude",
+    "anthropic",
+    "model-context-protocol",
+    "voice",
+    "text-to-speech",
+    "tts",
+    "elevenlabs",
+    "ai-voice",
+    "voice-cloning",
+    "phantom-voices",
+    "vapi",
+    "retell",
+    "bland-ai"
+  ],
+  "author": "PHANTOM VOICES",
+  "license": "MIT",
+  "homepage": "https://auto-business-agent.replit.app/portfolio",
+  "bugs": {
+    "url": "https://auto-business-agent.replit.app/portfolio"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}
