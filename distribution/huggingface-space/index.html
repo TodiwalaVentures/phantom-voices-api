@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHANTOM VOICES — AI Voice Clone Finder</title>
+  <meta name="description" content="10 Professional AI Voice Clones. Zero Fee. Instant API Integration. Search, filter, and get recommendations for the perfect voice clone.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #141414;
+      --bg-input: #1a1a1a;
+      --accent: #00ff80;
+      --accent-dim: rgba(0, 255, 128, 0.15);
+      --accent-border: rgba(0, 255, 128, 0.25);
+      --text: #e5e5e5;
+      --text-secondary: #a0a0a0;
+      --text-muted: #666;
+      --border: #2a2a2a;
+      --radius: 6px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    .mono { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.8; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .logo span { color: var(--accent); }
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--accent);
+      color: #000;
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 48px 0 32px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 56px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      max-width: 500px;
+      margin: 0 auto 20px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Search */
+    .search-bar {
+      display: flex;
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto 32px;
+      flex-wrap: wrap;
+    }
+    .search-bar input, .search-bar select {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 13px;
+      outline: none;
+    }
+    .search-bar input:focus, .search-bar select:focus {
+      border-color: var(--accent-border);
+    }
+    .search-bar input { flex: 1; min-width: 200px; }
+    .search-bar select { min-width: 160px; }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    /* Voice Card */
+    .voice-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .voice-card:hover {
+      border-color: var(--accent-border);
+      box-shadow: 0 0 20px rgba(0, 255, 128, 0.06);
+    }
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .card-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .card-header .id-badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      border: 1px solid rgba(0,255,128,0.3);
+      border-radius: var(--radius);
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+    .archetype {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .keyword {
+      font-size: 10px;
+      padding: 2px 8px;
+      background: rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      color: var(--text-secondary);
+    }
+    .languages {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .btn-add {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px;
+      background: #059669;
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-add:hover { background: #10b981; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-secondary);
+      font-size: 11px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent-border); color: var(--text); }
+    .card-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .signup-link {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    .signup-link:hover { color: var(--accent); }
+
+    /* Recommend Section */
+    .recommend-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+    .recommend-section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .recommend-section h2 span { color: var(--accent); }
+    .recommend-section p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .recommend-form {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .recommend-form textarea {
+      flex: 1;
+      min-width: 250px;
+      min-height: 80px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 13px;
+      resize: vertical;
+      outline: none;
+      font-family: inherit;
+    }
+    .recommend-form textarea:focus { border-color: var(--accent-border); }
+    .recommend-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 200px;
+    }
+    .recommend-controls select {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 13px;
+      outline: none;
+    }
+    .recommend-controls select:focus { border-color: var(--accent-border); }
+    .btn-recommend {
+      padding: 10px 20px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-recommend:hover { opacity: 0.85; }
+    .btn-recommend:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Results */
+    .results {
+      margin-top: 20px;
+    }
+    .result-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .result-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .result-card .meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .result-card .reason {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .config-block {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px;
+      margin-top: 8px;
+      overflow-x: auto;
+    }
+    .config-block pre {
+      font-size: 11px;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .audio-player {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      margin-top: 6px;
+    }
+    .audio-play-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-border);
+      background: var(--accent-dim);
+      color: var(--accent);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .audio-play-btn:hover { background: rgba(0,255,128,0.25); }
+    .audio-progress {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      min-width: 60px;
+    }
+    .audio-progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.2s;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .error-msg {
+      text-align: center;
+      padding: 20px;
+      color: #f87171;
+      font-size: 13px;
+    }
+    .empty-msg {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+    }
+    footer .brand {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    footer .rights {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    footer .cta-link {
+      font-size: 11px;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+    footer .cta-link:hover { opacity: 1; }
+
+    @media (max-width: 500px) {
+      .grid { grid-template-columns: 1fr; }
+      .recommend-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="logo">PHANTOM <span>VOICES</span></div>
+      <a href="https://try.elevenlabs.io/xz94z17y73rm" target="_blank" rel="noopener noreferrer" class="header-cta">
+        GET FREE ELEVENLABS ACCOUNT &rarr;
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge mono">
+        <span class="dot"></span>
+        Signal Fleet Active
+      </div>
+      <h1>PHANTOM <span>VOICES</span></h1>
+      <p class="mono">10 Professional Voice Clones. Zero Fee. Instant API Integration.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search voices by keyword, language, use case..." class="mono">
+      <select id="languageFilter" class="mono">
+        <option value="">All Languages</option>
+        <option value="english">English</option>
+        <option value="japanese">Japanese</option>
+        <option value="korean">Korean</option>
+        <option value="spanish">Spanish</option>
+        <option value="french">French</option>
+        <option value="german">German</option>
+        <option value="hindi">Hindi</option>
+        <option value="arabic">Arabic</option>
+        <option value="mandarin">Mandarin</option>
+        <option value="urdu">Urdu</option>
+        <option value="portuguese">Portuguese</option>
+      </select>
+    </div>
+
+    <div id="voiceGrid" class="grid">
+      <div class="loading mono">Loading voices...</div>
+    </div>
+
+    <section class="recommend-section">
+      <h2>Recommend a <span>Voice</span></h2>
+      <p>Describe your use case and we'll recommend the best voice from our fleet.</p>
+      <div class="recommend-form">
+        <textarea id="useCaseInput" placeholder="e.g. I need a professional narrator for a corporate training video in English and Spanish..." class="mono"></textarea>
+        <div class="recommend-controls">
+          <select id="platformSelect" class="mono">
+            <option value="">Any Platform</option>
+            <optgroup label="Voice Agents">
+              <option value="vapi">Vapi</option>
+              <option value="retell">Retell AI</option>
+              <option value="bland">Bland AI</option>
+              <option value="synthflow">Synthflow</option>
+              <option value="voiceflow">Voiceflow</option>
+              <option value="playai">Play.ai</option>
+            </optgroup>
+            <optgroup label="AI Frameworks">
+              <option value="langchain">LangChain</option>
+              <option value="crewai">CrewAI</option>
+              <option value="autogen">AutoGen</option>
+              <option value="vercel">Vercel AI SDK</option>
+            </optgroup>
+            <optgroup label="No-Code / Low-Code">
+              <option value="botpress">Botpress</option>
+              <option value="dify">Dify.ai</option>
+              <option value="flowise">Flowise</option>
+              <option value="n8n">n8n</option>
+              <option value="make">Make</option>
+              <option value="zapier">Zapier</option>
+            </optgroup>
+            <optgroup label="Video AI">
+              <option value="heygen">HeyGen</option>
+              <option value="synthesia">Synthesia</option>
+              <option value="d-id">D-ID</option>
+              <option value="pictory">Pictory</option>
+              <option value="invideo">InVideo</option>
+              <option value="colossyan">Colossyan</option>
+              <option value="fliki">Fliki</option>
+              <option value="runway">Runway</option>
+              <option value="descript">Descript</option>
+              <option value="kapwing">Kapwing</option>
+              <option value="lumen5">Lumen5</option>
+            </optgroup>
+            <optgroup label="Direct / Telephony">
+              <option value="elevenlabs">ElevenLabs API</option>
+              <option value="twilio">Twilio</option>
+            </optgroup>
+          </select>
+          <button id="recommendBtn" class="btn-recommend" onclick="getRecommendation()">GET RECOMMENDATION</button>
+        </div>
+      </div>
+      <div id="recommendResults" class="results"></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="brand">PHANTOM VOICES &mdash; Signal Fleet</div>
+      <div class="rights">Commercial Rights Cleared on All Assets</div>
+      <a href="https://try.elevenlabs.io/xz94z17y73rm" target="_blank" rel="noopener noreferrer" class="cta-link">
+        Get your free ElevenLabs account &rarr;
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // ========================================
+    // CONFIGURATION — Change this URL to your deployed API domain
+    // ========================================
+    var BASE_URL = "https://auto-business-agent.replit.app";
+    // ========================================
+
+    var allVoices = [];
+    var searchTimeout = null;
+
+    function init() {
+      fetchVoices();
+      document.getElementById("searchInput").addEventListener("input", debounceSearch);
+      document.getElementById("languageFilter").addEventListener("change", debounceSearch);
+    }
+
+    function debounceSearch() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(performSearch, 300);
+    }
+
+    function fetchVoices() {
+      var grid = document.getElementById("voiceGrid");
+      grid.innerHTML = '<div class="loading mono">Loading voices...</div>';
+
+      fetch(BASE_URL + "/api/public/voices")
+        .then(function(res) {
+          if (!res.ok) throw new Error("Failed to fetch");
+          return res.json();
+        })
+        .then(function(voices) {
+          allVoices = voices;
+          renderVoices(voices);
+        })
+        .catch(function(err) {
+          grid.innerHTML = '<div class="error-msg mono">Failed to load voices. Make sure BASE_URL is set correctly.</div>';
+        });
+    }
+
+    function performSearch() {
+      var query = document.getElementById("searchInput").value.trim();
+      var lang = document.getElementById("languageFilter").value;
+
+      if (!query && !lang) {
+        renderVoices(allVoices);
+        return;
+      }
+
+      var params = new URLSearchParams();
+      if (query) params.set("q", query);
+      if (lang) params.set("language", lang);
+
+      var grid = document.getElementById("voiceGrid");
+      grid.innerHTML = '<div class="loading mono">Searching...</div>';
+
+      fetch(BASE_URL + "/api/public/search?" + params.toString())
+        .then(function(res) {
+          if (!res.ok) throw new Error("Search failed");
+          return res.json();
+        })
+        .then(function(voices) {
+          renderVoices(voices);
+        })
+        .catch(function() {
+          grid.innerHTML = '<div class="error-msg mono">Search failed. Please try again.</div>';
+        });
+    }
+
+    function renderVoices(voices) {
+      var grid = document.getElementById("voiceGrid");
+
+      if (!voices || voices.length === 0) {
+        grid.innerHTML = '<div class="empty-msg mono">No voices match your search criteria.</div>';
+        return;
+      }
+
+      grid.innerHTML = voices.map(function(v) {
+        var keywords = (v.keywords || []).slice(0, 5).map(function(kw) {
+          return '<span class="keyword mono">' + escapeHtml(kw) + '</span>';
+        }).join("");
+
+        var langs = (v.languages || []).join(" / ");
+
+        return '<div class="voice-card" data-id="' + escapeHtml(v.id) + '">' +
+          '<div class="card-header">' +
+            '<h3>' + escapeHtml(v.name) + '</h3>' +
+            '<span class="id-badge mono">' + escapeHtml(v.id) + '</span>' +
+          '</div>' +
+          '<div class="archetype">' + escapeHtml(v.archetype || "") + '</div>' +
+          '<div class="keywords">' + keywords + '</div>' +
+          (langs ? '<div class="languages mono">Languages: ' + escapeHtml(langs) + '</div>' : '') +
+          '<div class="audio-player">' +
+            '<button class="audio-play-btn" data-voice-id="' + escapeHtml(v.id) + '" onclick="togglePreview(this, \'' + escapeHtml(v.id) + '\')">&#9654;</button>' +
+            '<div class="audio-progress"><div class="audio-progress-fill" id="progress-' + escapeHtml(v.id) + '"></div></div>' +
+            '<span class="mono" style="font-size:10px;color:var(--text-muted)">Preview</span>' +
+          '</div>' +
+          '<div class="card-actions">' +
+            '<a href="' + escapeHtml(v.elevenlabsUrl || "#") + '" target="_blank" rel="noopener noreferrer" class="btn-add">' +
+              'ADD TO YOUR ACCOUNT &mdash; FREE' +
+            '</a>' +
+            '<div class="card-row">' +
+              '<button class="btn-secondary mono" onclick="copyToClipboard(\'' + escapeHtml(v.voiceId || "") + '\', this)">COPY VOICE ID</button>' +
+              '<button class="btn-secondary mono" onclick="copyToClipboard(\'' + escapeHtml(v.id || "") + '\', this)">COPY ' + escapeHtml(v.id) + '</button>' +
+            '</div>' +
+            '<a href="https://try.elevenlabs.io/xz94z17y73rm" target="_blank" rel="noopener noreferrer" class="signup-link mono">' +
+              'No ElevenLabs account? Sign up free &rarr;' +
+            '</a>' +
+          '</div>' +
+        '</div>';
+      }).join("");
+    }
+
+    function getRecommendation() {
+      var useCase = document.getElementById("useCaseInput").value.trim();
+      var platform = document.getElementById("platformSelect").value;
+      var resultsDiv = document.getElementById("recommendResults");
+      var btn = document.getElementById("recommendBtn");
+
+      if (!useCase) {
+        resultsDiv.innerHTML = '<div class="error-msg mono">Please describe your use case.</div>';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "ANALYZING...";
+      resultsDiv.innerHTML = '<div class="loading mono">Finding the best voice for your needs...</div>';
+
+      var params = new URLSearchParams();
+      params.set("use_case", useCase);
+      if (platform) params.set("platform", platform);
+      params.set("limit", "3");
+
+      fetch(BASE_URL + "/api/public/recommend?" + params.toString())
+        .then(function(res) {
+          if (!res.ok) throw new Error("Recommendation failed");
+          return res.json();
+        })
+        .then(function(data) {
+          renderRecommendations(data);
+        })
+        .catch(function() {
+          resultsDiv.innerHTML = '<div class="error-msg mono">Recommendation failed. Make sure BASE_URL is configured.</div>';
+        })
+        .finally(function() {
+          btn.disabled = false;
+          btn.textContent = "GET RECOMMENDATION";
+        });
+    }
+
+    function renderRecommendations(data) {
+      var resultsDiv = document.getElementById("recommendResults");
+      var recommendations = data.recommendations || data.results || [data];
+
+      if (!Array.isArray(recommendations)) recommendations = [recommendations];
+
+      var html = recommendations.map(function(rec) {
+        var voiceName = rec.voiceName || rec.name || rec.voice || "Recommended Voice";
+        var voiceId = rec.voiceId || rec.id || "";
+        var reason = rec.reason || rec.explanation || rec.description || "";
+        var sharingUrl = rec.sharingUrl || rec.elevenlabsUrl || "";
+        var platformConfig = rec.platformConfig || rec.config || null;
+
+        var configHtml = "";
+        if (platformConfig) {
+          configHtml = '<div class="config-block"><pre class="mono">' +
+            escapeHtml(typeof platformConfig === "string" ? platformConfig : JSON.stringify(platformConfig, null, 2)) +
+            '</pre></div>';
+        }
+
+        return '<div class="result-card">' +
+          '<h4>' + escapeHtml(voiceName) + (voiceId ? ' <span class="mono" style="color:var(--accent);font-size:11px">(' + escapeHtml(voiceId) + ')</span>' : '') + '</h4>' +
+          (reason ? '<div class="reason">' + escapeHtml(reason) + '</div>' : '') +
+          (sharingUrl ? '<a href="' + escapeHtml(sharingUrl) + '" target="_blank" rel="noopener noreferrer" class="btn-add" style="margin-bottom:8px">ADD TO YOUR ACCOUNT &mdash; FREE</a>' : '') +
+          configHtml +
+          '<a href="https://try.elevenlabs.io/xz94z17y73rm" target="_blank" rel="noopener noreferrer" class="signup-link mono" style="margin-top:10px">' +
+            'Need an ElevenLabs account? Sign up free &rarr;' +
+          '</a>' +
+        '</div>';
+      }).join("");
+
+      resultsDiv.innerHTML = html;
+    }
+
+    var currentAudio = null;
+    var currentBtn = null;
+    function togglePreview(btn, voiceId) {
+      if (currentAudio && currentBtn === btn) {
+        if (currentAudio.paused) {
+          currentAudio.play();
+          btn.innerHTML = "&#9646;&#9646;";
+        } else {
+          currentAudio.pause();
+          btn.innerHTML = "&#9654;";
+        }
+        return;
+      }
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.src = "";
+        if (currentBtn) currentBtn.innerHTML = "&#9654;";
+        var oldProgress = document.getElementById("progress-" + currentBtn.getAttribute("data-voice-id"));
+        if (oldProgress) oldProgress.style.width = "0%";
+      }
+      btn.innerHTML = "...";
+      var audio = new Audio(BASE_URL + "/api/public/preview/" + voiceId);
+      currentAudio = audio;
+      currentBtn = btn;
+      audio.addEventListener("canplaythrough", function() {
+        btn.innerHTML = "&#9646;&#9646;";
+        audio.play();
+      });
+      audio.addEventListener("timeupdate", function() {
+        var bar = document.getElementById("progress-" + voiceId);
+        if (bar && audio.duration) bar.style.width = (audio.currentTime / audio.duration * 100) + "%";
+      });
+      audio.addEventListener("ended", function() {
+        btn.innerHTML = "&#9654;";
+        var bar = document.getElementById("progress-" + voiceId);
+        if (bar) bar.style.width = "0%";
+        currentAudio = null;
+        currentBtn = null;
+      });
+      audio.addEventListener("error", function() {
+        btn.innerHTML = "&#9654;";
+        currentAudio = null;
+        currentBtn = null;
+      });
+      audio.load();
+    }
+
+    function copyToClipboard(text, btn) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() {
+          var original = btn.textContent;
+          btn.textContent = "COPIED!";
+          btn.style.borderColor = "var(--accent-border)";
+          btn.style.color = "var(--accent)";
+          setTimeout(function() {
+            btn.textContent = original;
+            btn.style.borderColor = "";
+            btn.style.color = "";
+          }, 1500);
+        });
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
